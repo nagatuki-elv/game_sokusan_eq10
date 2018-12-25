@@ -1,0 +1,1 @@
+# game_sokusan_eq10
