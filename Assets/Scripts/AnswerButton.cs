@@ -1,13 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class AnswerButton : MonoBehaviour {
 	/// <summary>テキスト</summary>
-	[SerializeField] TextMeshProUGUI text;
+	[SerializeField] Text text;
 	/// <summary>ボタン</summary>
 	[SerializeField] private Button button;
 

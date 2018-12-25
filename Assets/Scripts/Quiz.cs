@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
 using System.Text;
 using System.Linq;
@@ -9,7 +8,7 @@ using UnityEngine.Events;
 
 public class Quiz : MonoBehaviour {
 	/// <summary>クイズテキスト</summary>
-	[SerializeField] private TextMeshProUGUI quizText;
+	[SerializeField] private Text quizText;
 
 	/// <summary>グリッドレイアウト</summary>
 	[SerializeField] private GridLayoutGroup answerGrid;

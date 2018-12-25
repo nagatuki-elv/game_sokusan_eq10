@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using TMPro;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -26,11 +25,11 @@ public class GameManager : MonoBehaviour {
 	private float time = 0;
 
 	/// <summary>制限時間テキスト</summary>
-	[SerializeField] private TextMeshProUGUI timeText;
+	[SerializeField] private Text timeText;
 	/// <summary>追加制限時間オブジェクト</summary>
 	[SerializeField] private GameObject addTimeObj;
 	/// <summary>問題数テキスト</summary>
-	[SerializeField] private TextMeshProUGUI numberText;
+	[SerializeField] private Text numberText;
 
 	/// <summary>チュートリアル用のクイズ</summary>
 	[SerializeField] private GameObject tutorialQuiz;
@@ -71,9 +70,12 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] private GameObject resultObj;
 
 	/// <summary>スコアテキスト</summary>
-	[SerializeField] private TextMeshProUGUI scoreText;
+	[SerializeField] private Text scoreText;
 	/// <summary>ボーナスオブジェクト</summary>
 	[SerializeField] private GameObject bonusObj;
+
+	/// <summary>タイトルに戻るボタン</summary>
+	[SerializeField] private Button gotoTitleButton;
 
 	/// <summary>終了</summary>
 	private UnityAction onBackTitle = null;
@@ -114,7 +116,10 @@ public class GameManager : MonoBehaviour {
 	List<QuizData> quizDataList = null;
 
 	void Start(){
-
+		// タイトルに戻る
+		gotoTitleButton.onClick.AddListener(() => {
+			onBackTitle();
+		});
 	}
 
 	/// <summary>
@@ -235,29 +240,6 @@ public class GameManager : MonoBehaviour {
 		scoreText.text = answerPoint + "問正解！";
 		// 最大数正解していればボーナス文言表示
 		bonusObj.SetActive(answerPoint == maxQuiz);
-
-		// スコア送信
-		naichilab.RankingLoader.Instance.SendScoreAndShowRanking(score);
-
-		yield return null;
-
-		RankingMenuButton.Instance.backButton.onClick.AddListener(() => {
-			UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync ("Ranking");
-			onBackTitle();
-		});
-		RankingMenuButton.Instance.retryButton.onClick.AddListener(() => {
-			UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync ("Ranking");
-			GameStart(false);
-		});
-		RankingMenuButton.Instance.tweetButton.onClick.AddListener(() => {
-			if(answerPoint == maxQuiz){
-				// スコア付きツイート
-				naichilab.UnityRoomTweet.Tweet("sokusan_eq_10", string.Format("[速算eq10]{0}問正解し、スコア{1}を獲得しました！", answerPoint, score), "unityroom", "unity1week", "速算eq10");
-			}else{
-				// 正解数ツイート
-				naichilab.UnityRoomTweet.Tweet("sokusan_eq_10", string.Format("[速算eq10]{0}問正解しました！", answerPoint), "unityroom", "unity1week", "速算eq10");
-			}
-		});
 	}
 
 	/// <summary>
